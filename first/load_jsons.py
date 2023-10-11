@@ -19,9 +19,9 @@ if __name__ == '__main__':
             collection = db.create_collection(file.stem)
             json_list = json.load(fh)
             for json_file in json_list:
-                print(file.stem[:-1].capitalize())
                 if file.stem != "authors":
-                    json_file["author"] = list(filter(lambda n: n["fullname"] == json_file["author"], authors))[0]
+                    json_file["author"] = list(filter(lambda n: n["fullname"].replace("-", " ") == json_file["author"].replace("-", " "), authors))[0]
                 object = model_file_dict[file.stem](**json_file).save()
                 if file.stem == "authors":
                     authors.append(object)
+    print("Done")
